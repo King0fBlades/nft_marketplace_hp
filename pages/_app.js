@@ -8,7 +8,9 @@ const MyApp = ({ Component, pageProps }) => (
 	<ThemeProvider attribute="class">
 		<div className="dark:bg-nft-dark bg-white min-h-screen">
 			<Navbar />
-			<Component {...pageProps} />
+			<div className="pt-20">
+				<Component {...pageProps} />
+			</div>
 			<Footer />
 		</div>
 
