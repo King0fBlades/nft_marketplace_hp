@@ -1,7 +1,7 @@
 import React from 'react';
 
 const MyNFTs = () => {
-	return <div>MyNFTs</div>;
+	return <div>my-nfts</div>;
 };
 
 export default MyNFTs;
