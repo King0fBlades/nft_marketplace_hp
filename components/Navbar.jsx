@@ -6,6 +6,7 @@ import Link from 'next/link';
 
 import images from '../assets';
 import { Button } from './';
+import { NFTContext } from '../context/NFTContext';
 
 const MenuItems = ({ isMobile, active, setActive }) => {
 	const generateLink = (i) => {
@@ -47,9 +48,9 @@ const MenuItems = ({ isMobile, active, setActive }) => {
 };
 
 const ButtonGroup = ({ setActive, router }) => {
-	const hasConnected = true;
+	const { connectWallet, currentAccount } = useContext(NFTContext);
 
-	return hasConnected ? (
+	return currentAccount ? (
 		<Button
 			btnName="Create"
 			classStyles="mx-2 rounded-xl"
@@ -60,8 +61,31 @@ const ButtonGroup = ({ setActive, router }) => {
 			}}
 		/>
 	) : (
-		<Button btnName="Connect" classStyles="mx-2 rounded-xl" />
+		<Button
+			btnName="Connect"
+			classStyles="mx-2 rounded-xl"
+			handleClick={connectWallet}
+		/>
 	);
+};
+
+const checkActive = (active, setActive, router) => {
+	switch (router.pathname) {
+		case '/':
+			if (active !== 'Explore NFTs') setActive('Explore NFTs');
+			break;
+		case '/created-nfts':
+			if (active !== 'Listed NFTs') setActive('Listed NFTs');
+			break;
+		case '/my-nfts':
+			if (active !== 'My NFTs') setActive('My NFTs');
+			break;
+		case '/create-nft':
+			setActive('');
+			break;
+		default:
+			setActive('');
+	}
 };
 
 const Navbar = () => {
@@ -70,6 +94,10 @@ const Navbar = () => {
 	const router = useRouter();
 	const [active, setActive] = useState('Explore NFTs');
 	const [isOpen, setIsOpen] = useState(false);
+
+	useEffect(() => {
+		checkActive(active, setActive, router);
+	}, [router.pathname]);
 
 	useEffect(() => setMounted(true), []);
 
