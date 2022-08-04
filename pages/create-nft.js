@@ -8,7 +8,7 @@ import { Button, Input } from '../components';
 import images from '../assets';
 
 const CreateNFT = () => {
-	const theme = useTheme();
+	const { theme } = useTheme();
 	const [fileUrl, setFileUrl] = useState(null);
 	const [formInput, setFormInput] = useState({
 		price: '',
